@@ -1,0 +1,23 @@
+function App() {
+    const user = useSelector((state) => state.user);
+  
+    return (
+      <NavigationContainer>
+        <Stack.Navigator initialRouteName="Login">
+          <Stack.Screen name="Login" component={LoginScreen} />
+          {user.isAuthenticated && (
+            <>
+              <Stack.Screen name="Home" component={HomeScreen} />
+              {user.role === 'admin' && (
+                <>
+                  <Stack.Screen name="PatientList" component={PatientListScreen} />
+                  <Stack.Screen name="PatientDetail" component={PatientDetailScreen} />
+                </>
+              )}
+            </>
+          )}
+        </Stack.Navigator>
+      </NavigationContainer>
+    );
+  }
+  

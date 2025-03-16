@@ -1,0 +1,50 @@
+import React from 'react';
+import { View, Text, Button, FlatList, StyleSheet } from 'react-native';
+import { useSelector } from 'react-redux';
+
+const AlertsScreen = () => {
+  const alerts = useSelector((state) => state.alerts.list);
+
+  return (
+    <View style={styles.container}>
+      <Text style={styles.title}>Alerts & Notifications</Text>
+      <FlatList
+        data={alerts}
+        keyExtractor={(item) => item.id.toString()}
+        renderItem={({ item }) => (
+          <View style={[styles.alertCard, item.urgent && styles.urgent]}>
+            <Text>{item.message}</Text>
+            <Button title="Acknowledge" onPress={() => {/* Acknowledge alert */}} />
+          </View>
+        )}
+      />
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 16,
+    backgroundColor: '#f0f8ff',
+  },
+  title: {
+    fontSize: 24,
+    marginBottom: 16,
+    textAlign: 'center',
+    color: '#333',
+  },
+  alertCard: {
+    padding: 16,
+    backgroundColor: '#fff',
+    borderRadius: 8,
+    borderColor: '#ccc',
+    borderWidth: 1,
+    marginBottom: 8,
+  },
+  urgent: {
+    borderColor: 'red',
+  },
+});
+
+export default AlertsScreen;

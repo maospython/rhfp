@@ -1,0 +1,54 @@
+import React from 'react';
+import { View, Text, Button, FlatList, StyleSheet } from 'react-native';
+import { useSelector } from 'react-redux';
+
+const DashboardScreen = ({ navigation }) => {
+  const patients = useSelector((state) => state.patients.list);
+
+  return (
+    <View style={styles.container}>
+      <Text style={styles.title}>Dashboard</Text>
+      <FlatList
+        data={patients}
+        keyExtractor={(item) => item.id.toString()}
+        renderItem={({ item }) => (
+          <View style={styles.patientCard}>
+            <Text>{item.name}</Text>
+            <Button
+              title="View"
+              onPress={() => navigation.navigate('PatientDetail', { patientId: item.id })}
+            />
+          </View>
+        )}
+        numColumns={2}
+      />
+      <Button title="Add New Patient" onPress={() => navigation.navigate('AddPatient')} />
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 16,
+    backgroundColor: '#f0f8ff',
+  },
+  title: {
+    fontSize: 24,
+    marginBottom: 16,
+    textAlign: 'center',
+    color: '#333',
+  },
+  patientCard: {
+    flex: 1,
+    margin: 8,
+    padding: 16,
+    backgroundColor: '#fff',
+    borderRadius: 8,
+    borderColor: '#ccc',
+    borderWidth: 1,
+    alignItems: 'center',
+  },
+});
+
+export default DashboardScreen;
